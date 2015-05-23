@@ -13,7 +13,8 @@
 ### Running lightbooth
 ```
 cd lightbooth;
-sudo python lightbooth.py```
+sudo python lightbooth.py
+```
 
 ### Good to know
 
@@ -81,7 +82,8 @@ network={
 Update Raspian
 ```
 sudo apt-get update
-sudo apt-get upgrade```
+sudo apt-get upgrade
+```
 
 Install newest version of gphoto from source (takes a while)
 ```wget https://raw.githubusercontent.com/gonzalo/gphoto2-updater/master/gphoto2-updater.sh && chmod +x gphoto2-updater.sh && sudo ./gphoto2-updater.sh```
