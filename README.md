@@ -11,7 +11,8 @@
 * Connect 5v USB adapter to RPI. Make sure it has enough Ampere for the number of lights connected to the relay
 
 ### Running lightbooth
-```cd lightbooth;
+```
+cd lightbooth;
 sudo python lightbooth.py```
 
 ### Good to know
@@ -78,7 +79,8 @@ network={
 [Download](http://www.raspberrypi.org/downloads) and install Raspian.
 
 Update Raspian
-```sudo apt-get update
+```
+sudo apt-get update
 sudo apt-get upgrade```
 
 Install newest version of gphoto from source (takes a while)
@@ -87,11 +89,11 @@ Install newest version of gphoto from source (takes a while)
 Install Adafruit GPIO Library
 ```git clone http://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code.git```
 
-Install the Python GPIO libraries for accessing the pins in python + install pygame which will be used as display
+Install the Python GPIO libraries for accessing the pins in python + install pygame which will be used as display + install php5 things for uploading to instagram
 ```sudo apt-get install python-dev python-rpi.gpio python-pygame python-setuptools php5-cli php5-curl```
 
 If screen has black borders, do the following
 ```sudo nano /boot/config.txt```
 Set ```disable_overscan=1```
 
-Git clone this repo
+Git clone this repo: ``` git clone git@github.com:ErikBorra/lightbooth.git ```
