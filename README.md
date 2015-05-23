@@ -5,7 +5,7 @@
 ### Connecting the peripherals
 
 * Connect camera via USB to RPI. The camera should be set to M or P (preferably). Make sure the camera has no sleep mode or battery saver or so
-* Connect button and relay to RPI, see picture
+* Connect button and relay to RPI, see picture of breakout board. 
 * Connect screen to RPI
 * Put the socket in the wall, connect a light to the socket
 * Connect 5v USB adapter to RPI. Make sure it has enough Ampere for the number of lights connected to the relay
@@ -15,11 +15,14 @@
 cd lightbooth;
 sudo python lightbooth.py
 ```
+When lightbooth is running, a green led will be on. When a picture is being taken, the lights will switch of and the red led is on.
+
+In the console, some status messages are shown. If you see "command given gphoto2 ...", but don't hear the camera, restart lightbooth.
 
 ### Good to know
 
 * All images are stored on /home/pi/lightbooth/images
-* A public, read only, samba share called 'lightbooth' has been set up on the same dir. Connect to this share from another machine to run the slideshow from.
+* A public, read only, samba share called 'lightbooth' has been set up on the same dir. Connect to this share from another machine to run the slideshow from. The subdir 'instagram' has the same images, but as a center square cut-out and with the anomaly logo embedded.
 
 ## Config
 

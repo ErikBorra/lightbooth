@@ -49,7 +49,7 @@ waiting_on_download = False # if this is true, look for last_image_taken
 def clicked(channel):
     print("Button clicked")
     if waiting_on_download:
-        DrawCenterMessage("Wait for it ...",250)
+        DrawCenterMessage("Wait for it ...")
     else:
         TakePicture()
 
@@ -94,7 +94,7 @@ def DrawLogo():
     
     pygame.display.update()
     
-def DrawCenterMessage(message,local_width=550,big=False):
+def DrawCenterMessage(message,big=False):
     """displays notification messages onto the screen"""
     if big:
         fontsize = 160
@@ -109,19 +109,16 @@ def DrawCenterMessage(message,local_width=550,big=False):
 
     pygame.display.update()
     
-def DrawTopMessage(message,local_width=550):
+def DrawTopMessage(message):
     """displays notification messages onto the screen"""
-    local_height = 70
-    x = offset + width/2 - local_width/2
-    y = 0
+    screen.fill(black)
+    DrawLogo()
+    TextSurf = pygame.font.SysFont(font,40).render(message, True, white)
+    TextRect = TextSurf.get_rect()
+    TextRect.center = ((size[0]/2),(80))
+    screen.blit(TextSurf, TextRect)
 
-    backgroundCenterSurface = pygame.Surface((local_width,local_height)) # size
-    backgroundCenterSurface.fill(black)
-
-    screen.blit(backgroundCenterSurface,(x,y)) # position
-    screen.blit(pygame.font.SysFont(font,40,bold=1).render(message, 1, white),(x+10,y+10))
-    
-    pygame.display.update()    
+    pygame.display.update()
     
 def LoadNewImage():
     """ after new image has been downloaded from the camera
@@ -153,14 +150,15 @@ def LoadNewImage():
     waiting_on_download = False
     
 def uploadToInstagram():
-    rect = pygame.Rect((width-height)/2, 0, height, height)
+    rect = pygame.Rect((size[0]-size[1])/2, 0, height, height)
     rect_surface = screen.subsurface(rect)
-    pygame.image.save(rect_surface, photo_dir + "instagram.jpg")
-    print "square screenshot saved"
+    instagram_name = last_image_taken.replace(photo_dir,photo_dir+"/instagram.jpg")
+    pygame.image.save(rect_surface, instagram_name)
     p = sub.Popen("php instagram.php",stdout=sub.PIPE,stderr=sub.PIPE,shell=True)
     DrawTopMessage("Uploaded to instagram")
-    sleep(5)
     DrawLogo()
+    pygame.display.update()
+    sleep(5)
 
 def GetDateTimeString():
     """format the datetime for the time-stamped filename"""
@@ -178,7 +176,7 @@ def TakePicture():
     # count down 
     if do_count_down:
         for x in range(count_down_seconds, 0, -1):
-            DrawCenterMessage(str(x),200,True)
+            DrawCenterMessage(str(x),True)
             pygame.display.update()
             sleep(1)
     
@@ -187,12 +185,8 @@ def TakePicture():
     # dim screen
     screen.fill(black)
     DrawLogo()
-    DrawCenterMessage("SMILE :)",200)
+    DrawCenterMessage("SMILE :)")
     pygame.display.update()
-    
-    # @todo start counting until camera is done
-    
-    # @todo add camera settings
     
     # take picture
     last_image_taken = photo_dir + "lightbooth" + GetDateTimeString() + ".jpg"
@@ -283,6 +277,7 @@ DrawLogo()
 print "Ready for action"
 ledGreenOn()
 ledRedOff()
+DrawCenterMessage("Push the button ...")
 
 try:
     while(continue_loop):
@@ -291,13 +286,21 @@ try:
                 print "quiting..."
                 continue_loop = False
 
-        if waiting_on_download and os.path.isfile(last_image_taken):
-            print "found file: " + last_image_taken
-            LoadNewImage()
-            DrawLogo()
-            pygame.display.update()
-            if upload_to_instagram:
-                uploadToInstagram()
+        if waiting_on_download:
+            if os.path.isfile(last_image_taken):
+                print "found file: " + last_image_taken
+                LoadNewImage()
+                DrawLogo()
+                # get square screen shot
+                rect = pygame.Rect((size[0]-size[1])/2, 0, height, height)
+                rect_surface = screen.subsurface(rect)
+                instagram_name = last_image_taken.replace(photo_dir,photo_dir+"/instagram/")
+                pygame.image.save(rect_surface, instagram_name)
+                print "square screenshot saved"
+                # update display
+                pygame.display.update()
+                if upload_to_instagram:
+                    uploadToInstagram()
 
 except:
     GPIO.cleanup()
