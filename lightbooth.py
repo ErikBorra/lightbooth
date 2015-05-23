@@ -19,8 +19,9 @@ from time import sleep
 hashtag = "#anomalyxxx"
 show_hashtag = False
 count_down_seconds = 3 # how many seconds to count down
-do_count_down = False # whether there should be a count down displayed before taking a picture
+do_count_down = True # whether there should be a count down displayed before taking a picture
 upload_to_instagram = False # whether the picture should be uploaded to instagram
+anomaly_img = "anomaly_transparent_white.png" # anomaly_transparent_white.png or anomaly_transparent_black.png
 
 # gphoto settings
 gphoto_aperture = 15
@@ -37,6 +38,8 @@ gpio_LED_red = 19
 # other globals
 font = "freeserif"
 bounceMillis =  2000 # wait x ms before noticing another button press
+if do_count_down:
+    bounceMillis = bounceMillis + count_down_seconds*1000
 logo_size = 200
 photo_dir = "/home/pi/lightbooth/images/"
 continue_loop = True
@@ -74,7 +77,7 @@ def DrawLogo():
     """ Draw title """
     #logo = pygame.transform.scale(pygame.image.load("anomaly_transparent_white.png"),(logosize[0],logosize[1]))
     # image
-    image = pygame.image.load("anomaly_transparent_white.png")
+    image = pygame.image.load(anomaly_img)
     
     # crop middle square and resize
     imgsize = image.get_rect().size
@@ -84,22 +87,26 @@ def DrawLogo():
     
     # hashtag
     if show_hashtag:
-        screen.blit(pygame.font.SysFont(font,60,bold=0).render(hashtag, 1, white),(offset+20,height-100))
+        TextSurf = pygame.font.SysFont(font,60).render(hashtag, True, white)
+        TextRect = TextSurf.get_rect()
+        TextRect.center = ((size[0]/2),height - 80)
+        screen.blit(TextSurf, TextRect)
     
     pygame.display.update()
     
-def DrawCenterMessage(message,local_width=550):
+def DrawCenterMessage(message,local_width=550,big=False):
     """displays notification messages onto the screen"""
-    local_height = 70
-    x = offset + width/2 - local_width/2
-    y = height/2 - local_height/2
+    if big:
+        fontsize = 160
+    else:
+        fontsize = 60
+    screen.fill(black)
+    DrawLogo()
+    TextSurf = pygame.font.SysFont(font,fontsize).render(message, True, white)
+    TextRect = TextSurf.get_rect()
+    TextRect.center = ((size[0]/2),(size[1]/2))
+    screen.blit(TextSurf, TextRect)
 
-    backgroundCenterSurface = pygame.Surface((local_width,local_height)) # size
-    backgroundCenterSurface.fill(black)
-
-    screen.blit(backgroundCenterSurface,(x,y)) # position
-    screen.blit(pygame.font.SysFont(font,40,bold=1).render(message, 1, white),(x+10,y+10))
-    
     pygame.display.update()
     
 def DrawTopMessage(message,local_width=550):
@@ -138,6 +145,7 @@ def LoadNewImage():
     
     # display on screen
     screen.blit(capture,(offset,0))
+    DrawLogo()
     pygame.display.update()
     
     print "capture added to screen"
@@ -170,7 +178,7 @@ def TakePicture():
     # count down 
     if do_count_down:
         for x in range(count_down_seconds, 0, -1):
-            DrawCenterMessage(str(x),200)
+            DrawCenterMessage(str(x),200,True)
             pygame.display.update()
             sleep(1)
     
@@ -178,8 +186,8 @@ def TakePicture():
     
     # dim screen
     screen.fill(black)
-    DrawCenterMessage("SMILE :)",200)
     DrawLogo()
+    DrawCenterMessage("SMILE :)",200)
     pygame.display.update()
     
     # @todo start counting until camera is done
