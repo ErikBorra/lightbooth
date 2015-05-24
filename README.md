@@ -1,10 +1,12 @@
 # Raspberry Pi LightBooth
 
 Lightbooth in a box
+
 <img src='doc/lightbooth_in_box.jpg' width='300px'>
 
-Lightbooth with all connections visible
-<img src='doc/lightbooth_connections.jpg' width='300px'>
+Lightbooth with all connections visible:
+
+<img src='doc/lightbooth_connected.jpg' width='300px'>
 
 ## Usage
 
@@ -16,7 +18,8 @@ Lightbooth with all connections visible
 * Put the socket in the wall, connect a light to the socket
 * Connect 5v USB adapter to RPI. Make sure it has enough Ampere for the number of lights connected to the relay
 
-Connections of relay (black, red, orange wires with blue tape) and button (black, red, red wires)
+Connections of relay (black, red, orange wires with blue tape) and button (black, red, red wires):
+
 <img src='/doc/lightbooth_connections_breakout_board.jpg' width='300px'>
 
 ### Running lightbooth
