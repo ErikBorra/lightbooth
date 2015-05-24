@@ -1,14 +1,23 @@
 # Raspberry Pi LightBooth
 
+Lightbooth in a box
+<img src='doc/lightbooth_in_box.jpg' width='300px'>
+
+Lightbooth with all connections visible
+<img src='doc/lightbooth_connections.jpg' width='300px'>
+
 ## Usage
 
 ### Connecting the peripherals
 
 * Connect camera via USB to RPI. The camera should be set to M or P (preferably). Make sure the camera has no sleep mode or battery saver or so
-* Connect button and relay to RPI, see picture of breakout board. 
+* Connect button and relay to RPI, see [picture of breakout board](/doc/lightbooth_connections_breakout_board.jpg)
 * Connect screen to RPI
 * Put the socket in the wall, connect a light to the socket
 * Connect 5v USB adapter to RPI. Make sure it has enough Ampere for the number of lights connected to the relay
+
+Connections of relay (black, red, orange wires with blue tape) and button (black, red, red wires)
+<img src='/doc/lightbooth_connections_breakout_board.jpg' width='300px'>
 
 ### Running lightbooth
 ```
