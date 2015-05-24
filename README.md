@@ -15,14 +15,23 @@
 cd lightbooth;
 sudo python lightbooth.py
 ```
-When lightbooth is running, a green led will be on. When a picture is being taken, the lights will switch of and the red led is on.
 
-In the console, some status messages are shown. If you see "command given gphoto2 ...", but don't hear the camera, restart lightbooth.
+### What happens?
+
+* When lightbooth is running, the green led on the breakout board will be on. 
+* Once lightbooth is ready to take pictures it will display "ready for action" on the command line, and "Push the button" on the screen connected via HDMI. 
+* When the button is clicked, the screen connected to HDMI will count down from `count_down_seconds` to 0, display 'smile :)', and take a picture.
+* When a picture is being taken, the lights connected to the wall socket will switch off and the red led on the breakout board will turn on.
+* Once the picture has been taken, the lights connected to the wall socket will switch back on, and the red led on the breakout board will turn off.
+* The screen connected to HDMI will display 'transferring picture' until the picture is loaded on screen. 
+* You can now click the button again to take a new picture.
 
 ### Good to know
 
-* All images are stored on /home/pi/lightbooth/images
-* A public, read only, samba share called 'lightbooth' has been set up on the same dir. Connect to this share from another machine to run the slideshow from. The subdir 'instagram' has the same images, but as a center square cut-out and with the anomaly logo embedded.
+* The high-res version of the picture is stored in /home/pi/lightbooth/images
+* A center square, lower res, version of the picture is stored in /home/pi/lightbooth/images/instagram. This picture also has the `anomaly_img` embedded.
+* A samba share called 'lightbooth' has been set up on the same dir. Connect to this share from another machine to run the slideshow from, e.g. via [pipresents](https://github.com/KenT2/pipresents-gapless). Connect with raspberry pi credentials to be able to modify the contents of this dir; default is view only.
+* If you see "command given gphoto2 ..." on the command line, but don't hear the camera click, restart lightbooth.
 
 ## Config
 
@@ -39,29 +48,23 @@ Note: if the image falls off screen, edit /boot/config.php and set disable_overs
 
 ### Gphoto
 
-Gphoto2 is used to remote control the camera via USB.
+Gphoto2 is used to remote control the camera via USB. Before starting up lightbooth, you'll first need to make sure gphoto2 is configured properly.
 
-For a Canon D6, a good configuration is as follows: aperture 22, iso 800, shutter speed 10, imageformat jpeg. This amounts to the following gphoto settings:
+For a Canon D6, a good configuration is as follows: aperture 22, iso 800, shutter speed 10, imageformat jpeg. This amounts to the following gphotos settings, to be set via the command line before you start lightbooth:
 
-* gphoto2 --set-config /main/capturesettings/shutterspeed=15
-* gphoto2 --set-config /main/imgsettings/iso=4
-* gphoto2 --set-config /main/capturesettings/aperture=15
-* gphoto2 --set-config /main/imgsettings/imageformat=1
-
-In lightbooth.py, you should thus set the following variables (use the gphoto settings)
 ```
-gphoto_shutterspeed = 15
-gphoto_iso = 4
-gphoto_aperture = 15
-gphoto_imageformat = 1
+sudo gphoto2 --set-config /main/capturesettings/shutterspeed=15
+sudo gphoto2 --set-config /main/imgsettings/iso=4
+sudo gphoto2 --set-config /main/capturesettings/aperture=15
+sudo gphoto2 --set-config /main/imgsettings/imageformat=1
 ```
 
-To experiment with other variables, use the following on the command line:
+To experiment with other values, use the following on the command line:
 ```
-gphoto2 --list-config # for an overview of all configurable parameters
-gphoto2 --get-config /main/capturesettings/shutterspeed # for an overview of all shutter speed values
-gphoto2 --get-config /main/imgsettings/iso # for an overview of all iso values
-gphoto2 --get-config /main/capturesettings/aperture # for an overview of all aperture values
+sudo gphoto2 --list-config # for an overview of all configurable parameters
+sudo gphoto2 --get-config /main/capturesettings/shutterspeed # for an overview of all shutter speed values
+sudo gphoto2 --get-config /main/imgsettings/iso # for an overview of all iso values
+sudo gphoto2 --get-config /main/capturesettings/aperture # for an overview of all aperture values
 ```
 
 ### Wifi
