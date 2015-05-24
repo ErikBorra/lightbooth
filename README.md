@@ -27,7 +27,7 @@ Connections of relay (black, red, orange wires with blue tape) and button (black
 Before running lightbooth, make sure to have set the [config](#config) and especially the [gphoto config](#gphoto).
 
 ```
-cd lightbooth;
+cd /home/pi/lightbooth
 sudo python lightbooth.py
 ```
 
