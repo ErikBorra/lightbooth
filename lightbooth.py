@@ -23,13 +23,14 @@ do_count_down = True # whether there should be a count down displayed before tak
 upload_to_instagram = False # whether the picture should be uploaded to instagram
 anomaly_img = "anomaly_transparent_white.png" # anomaly_transparent_white.png or anomaly_transparent_black.png
 
-# gphoto settings
-gphoto_aperture = 15
-gphoto_iso = 2
-gphoto_shutterspeed = 40
-gphoto_imageformat = 1
+# gphoto settings, good settings for a canon D6
+# see README.md for how to set it
+#gphoto_shutterspeed = 15
+#gphoto_iso = 4
+#gphoto_aperture = 15
+#gphoto_imageformat = 1
 
-# set up input / output pins
+# define input / output pins
 gpio_button = 17
 gpio_LED_green = 26
 gpio_relay = 4
@@ -213,19 +214,10 @@ GPIO.setup(gpio_LED_red, GPIO.OUT, False)
 GPIO.setup(gpio_relay, GPIO.OUT)
 
 # camera settings
-print "fixing camera settings"
-gphoto_iso_command = "gphoto2 --set-config /main/imgsettings/iso=" + str(gphoto_iso)
-print gphoto_iso_command
-p = sub.Popen(gphoto_iso_command,stdout=sub.PIPE,stderr=sub.PIPE,shell=True)
-gphoto_shutterspeed_command = "gphoto2 --set-config /main/capturesettings/shutterspeed=" + str(gphoto_shutterspeed)
-print gphoto_shutterspeed_command
-p = sub.Popen(gphoto_shutterspeed_command,stdout=sub.PIPE,stderr=sub.PIPE,shell=True)
-gphoto_aperture_command = "gphoto2 --set-config gphoto2 /main/capturesettings/aperture=" + str(gphoto_aperture)
-print gphoto_aperture_command
-p = sub.Popen(gphoto_aperture_command,stdout=sub.PIPE,stderr=sub.PIPE,shell=True)
-gphoto_imageformat_command = "gphoto2 --set-config /main/imgsettings/imageformat=" + str(gphoto_imageformat)
-print gphoto_imageformat_command
-p = sub.Popen(gphoto_imageformat_command,stdout=sub.PIPE,stderr=sub.PIPE,shell=True)
+#print "fixing camera settings"
+#gphoto_settings_command = "sudo gphoto2 --set-config iso=" + str(gphoto_iso) + " --set-config shutterspeed=" + str(gphoto_shutterspeed) + " --set-config aperture=" + str(gphoto_aperture) + " --set-config imageformat=" + str(gphoto_imageformat)
+#print gphoto_settings_command
+#p = sub.Popen(gphoto_settings_command,stdout=sub.PIPE,stderr=sub.PIPE,shell=True)
 
 # set up pygame display
 "Ininitializes a new pygame screen using the framebuffer"
