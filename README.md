@@ -4,7 +4,7 @@ Lightbooth in a box
 
 <img src='doc/lightbooth_in_box.jpg' width='300px'>
 
-Lightbooth with all connections visible:
+Lightbooth with all peripherals visible:
 
 <img src='doc/lightbooth_connected.jpg' width='300px'>
 
@@ -12,9 +12,9 @@ Lightbooth with all connections visible:
 
 ### Connecting the peripherals
 
-* Connect camera via USB to RPI. The camera should be set to M or P (preferably). Make sure the camera has no sleep mode or battery saver or so
+* Connect camera via USB to RPI. The camera should be set to M or P (preferably). Make sure the camera has sleep mode and/or battery saver disabled.
 * Connect button and relay to RPI, see [picture of breakout board](/doc/lightbooth_connections_breakout_board.jpg)
-* Connect screen to RPI
+* Connect screen to RPI via HDMI
 * Put the socket in the wall, connect a light to the socket
 * Connect 5v USB adapter to RPI. Make sure it has enough Ampere for the number of lights connected to the relay
 
@@ -62,7 +62,7 @@ Note: if the image falls off screen, edit /boot/config.php and set disable_overs
 
 Gphoto2 is used to remote control the camera via USB. Before starting up lightbooth, you'll first need to make sure gphoto2 is configured properly.
 
-For a Canon D6, a good configuration is as follows: aperture 22, iso 800, shutter speed 10, imageformat jpeg. This amounts to the following gphotos settings, to be set via the command line before you start lightbooth:
+For a Canon D6, a good configuration for light painting is as follows: aperture 22, iso 800, shutter speed 10, imageformat jpeg. This amounts to the following gphotos settings, to be set via the command line before you start lightbooth:
 
 ```
 sudo gphoto2 --set-config /main/capturesettings/shutterspeed=15
