@@ -31,7 +31,13 @@ cd /home/pi/lightbooth
 sudo python lightbooth.py
 ```
 
-### What happens?
+Note: when the camera cannot focus it sometimes hangs without actually taking a picture. (If you have a command line open you'll see "command given gphoto2 ..." , but don't hear the camera click). You'll have to restart lightbooth.
+
+### Restart lightbooth
+
+Go to the terminal of RPI (either via ssh, or by clicking 'ctrl-alt-f2'). Log in (user pi, password raspberry). Enter `sudo killall python`. Lightbooth will stop. Start it again, see above.
+
+### What happens when lightbooth is running?
 
 * When lightbooth is running, the green led on the breakout board will be on. 
 * Once lightbooth is ready to take pictures it will display "ready for action" on the command line, and "Push the button" on the screen connected via HDMI. 
@@ -46,7 +52,6 @@ sudo python lightbooth.py
 * The high-res version of the picture is stored in /home/pi/lightbooth/images
 * A center square, lower res, version of the picture is stored in /home/pi/lightbooth/images/instagram. This picture also has the `anomaly_img` embedded.
 * A samba share called 'lightbooth' has been set up on the same dir. Connect to this share from another machine to run the slideshow from, e.g. via [pipresents](https://github.com/KenT2/pipresents-gapless). Connect with raspberry pi credentials to be able to modify the contents of this dir; default is view only.
-* If you see "command given gphoto2 ..." on the command line, but don't hear the camera click, restart lightbooth.
 
 ## Config
 
