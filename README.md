@@ -38,11 +38,17 @@ sudo python lightbooth.py
 * The screen connected to HDMI will display 'transferring picture' until the picture is loaded on screen. 
 * You can now click the button again to take a new picture.
 
+### Slideshow
+
+* To view the captured images as a slideshow, use a computer which is on the same network as lightbooth. Open your browser and specify the following address: http://IP_ADDRESS/slideshow. 
+* The slideshow continually loops over all the captured images, in the order with which they were captured. 
+* When a new image is taken with lightbooth, the slideshow will show this picture and then continue its normal routine again.
+
 ### Good to know
 
 * The high-res version of the picture is stored in /home/pi/lightbooth/images
 * A center square, lower res, version of the picture is stored in /home/pi/lightbooth/images/instagram. This picture also has the `anomaly_img` embedded.
-* A samba share called 'lightbooth' has been set up on the same dir. Connect to this share from another machine to run the slideshow from, e.g. via [pipresents](https://github.com/KenT2/pipresents-gapless). Connect with raspberry pi credentials to be able to modify the contents of this dir; default is view only.
+* A samba share called 'lightbooth' has been set up on the same dir. Connect with raspberry pi credentials to be able to modify the contents of this dir; default is view only.
 * If you see "command given gphoto2 ..." on the command line, but don't hear the camera click, restart lightbooth.
 
 ## Config
@@ -71,6 +77,14 @@ sudo gphoto2 --set-config /main/capturesettings/aperture=15
 sudo gphoto2 --set-config /main/imgsettings/imageformat=1
 ```
 
+For a Canon 550D, the following should be set via the command line before you start lightbooth::
+```
+sudo gphoto2 --set-config /main/capturesettings/shutterspeed=6
+sudo gphoto2 --set-config /main/imgsettings/iso=4
+sudo gphoto2 --set-config /main/capturesettings/aperture=22
+sudo gphoto2 --set-config /main/imgsettings/imageformat=1
+```
+
 To experiment with other values, use the following on the command line:
 ```
 sudo gphoto2 --list-config # for an overview of all configurable parameters
@@ -92,6 +106,19 @@ network={
 }
 ```
 * see [here](https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md) for more elaborate instructions 
+
+Example config for a static IP address
+* sudo nano /etc/network/interfaces
+```
+auto wlan0
+allow-hotplug wlan0
+iface wlan0 inet static
+address 192.168.1.111
+gateway 192.168.1.1
+dns-nameservers 8.8.8.8
+netmask 255.255.255.0
+wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+```
 
 ## Clean install
 
@@ -117,3 +144,9 @@ If screen has black borders, do the following
 Set ```disable_overscan=1```
 
 Git clone this repo: ``` git clone git@github.com:ErikBorra/lightbooth.git ```
+
+To enable the slideshow: 
+```
+sudo apt-get install apache2 php5 libapache2-mod-php5 -y
+cd /var/www; sudo ln -s /home/pi/lightbooth/www slideshow
+```

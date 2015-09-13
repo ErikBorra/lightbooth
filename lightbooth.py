@@ -21,13 +21,20 @@ show_hashtag = False
 count_down_seconds = 3 # how many seconds to count down
 do_count_down = True # whether there should be a count down displayed before taking a picture
 upload_to_instagram = False # whether the picture should be uploaded to instagram
-anomaly_img = "anomaly_transparent_white.png" # anomaly_transparent_white.png or anomaly_transparent_black.png
+logo_img = "liberty_logo_inverted_transparent-200px.png" # specify a 200px logo
 
 # gphoto settings, good settings for a canon D6
 # see README.md for how to set it
 #gphoto_shutterspeed = 15
 #gphoto_iso = 4
 #gphoto_aperture = 15
+#gphoto_imageformat = 1
+
+# gphoto settings, good settings for a canon 550D
+# see README.md for how to set it
+#gphoto_shutterspeed = 6
+#gphoto_iso = 4
+#gphoto_aperture = 16
 #gphoto_imageformat = 1
 
 # define input / output pins
@@ -41,7 +48,7 @@ font = "freeserif"
 bounceMillis =  2000 # wait x ms before noticing another button press
 if do_count_down:
     bounceMillis = bounceMillis + count_down_seconds*1000
-logo_size = 200
+logo_size = 100
 photo_dir = "/home/pi/lightbooth/images/"
 continue_loop = True
 last_image_taken = ""
@@ -78,13 +85,13 @@ def DrawLogo():
     """ Draw title """
     #logo = pygame.transform.scale(pygame.image.load("anomaly_transparent_white.png"),(logosize[0],logosize[1]))
     # image
-    image = pygame.image.load(anomaly_img)
+    image = pygame.image.load(logo_img)
     
     # crop middle square and resize
     imgsize = image.get_rect().size
     image_square = pygame.Rect((imgsize[0]-imgsize[1])/2, 0, imgsize[1], imgsize[1]) # left, top, width, height
     image_surface = pygame.transform.scale(image.subsurface(image_square),(logo_size,logo_size))
-    screen.blit(image_surface,(offset+width-logo_size+20,height-logo_size+20))
+    screen.blit(image_surface,(offset+width-logo_size-20,height-logo_size-20))
     
     # hashtag
     if show_hashtag:
